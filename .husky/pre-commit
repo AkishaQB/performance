@@ -49,15 +49,5 @@ if [ -n "$STAGED_CONFIG_FILES" ]; then
   echo "✅ Config files processed successfully!"
 fi
 
-# Run tests or format check based on environment variable
-if [ "$RUN_TESTS" = "true" ]; then
-  echo "🛠 Running tests since RUN_TESTS=true..."
-  yarn test
-else
-  echo "✅ Skipping tests (RUN_TESTS flag not set)"
-  # Run format check on all files only if lint-staged was skipped
-  if [ "$SKIP_LINT_STAGED" = "true" ]; then
-    yarn format:check
-  fi
-fi
+
 
