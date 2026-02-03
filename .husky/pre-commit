@@ -1,0 +1,53 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Node version check first
+node -v | grep 'v20.18.0' > /dev/null || (echo "⚠️  Please switch to Node.js version 20.18.0 with 'nvm use'" && exit 1)
+
+# Get staged files
+STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx)$' || true)
+STAGED_CONFIG_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(json|md|yml|yaml)$' || true)
+
+# Count total files
+TS_COUNT=$(echo "$STAGED_TS_FILES" | grep -c . 2>/dev/null || echo 0)
+CONFIG_COUNT=$(echo "$STAGED_CONFIG_FILES" | grep -c . 2>/dev/null || echo 0)
+
+# Process TypeScript/JavaScript files
+if [ -n "$STAGED_TS_FILES" ]; then
+  echo "📝 Processing $TS_COUNT TypeScript/JavaScript files..."
+  
+  # Step 2: Run full ESLint fix
+  printf "  🔧 Running ESLint fixes... "
+  echo "$STAGED_TS_FILES" | xargs -r npx eslint --fix 2>&1 | grep -v "WARNING: You are currently running a version of TypeScript" | grep -v "@typescript-eslint/typescript-estree" | grep -v "Supported TypeScript versions" | grep -v "Your TypeScript version" | grep -v "Please only submit bug reports" > /dev/null || true
+  printf "✓\n"
+  
+  # Step 3: Format with Prettier
+  printf "  ✨ Formatting with Prettier... "
+  echo "$STAGED_TS_FILES" | xargs -r npx prettier --write --loglevel silent 2>/dev/null
+  printf "✓\n"
+  
+  # Re-stage all modified files
+  printf "  📦 Re-staging modified files... "
+  echo "$STAGED_TS_FILES" | xargs -r git add
+  printf "✓\n"
+  
+  echo "✅ TypeScript/JavaScript files processed successfully!"
+fi
+
+# Process config files (JSON, Markdown, YAML)
+if [ -n "$STAGED_CONFIG_FILES" ]; then
+  echo "📄 Processing $CONFIG_COUNT config files..."
+  
+  printf "  ✨ Formatting with Prettier... "
+  echo "$STAGED_CONFIG_FILES" | xargs -r npx prettier --write --loglevel silent 2>/dev/null
+  printf "✓\n"
+  
+  printf "  📦 Re-staging modified files... "
+  echo "$STAGED_CONFIG_FILES" | xargs -r git add
+  printf "✓\n"
+  
+  echo "✅ Config files processed successfully!"
+fi
+
+
+
