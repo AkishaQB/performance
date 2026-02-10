@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@akisha_jm/search-sdk':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.1.5
+        version: 0.1.5
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -87,8 +87,8 @@ importers:
 
 packages:
 
-  '@akisha_jm/search-sdk@0.1.0':
-    resolution: {integrity: sha512-XEMbmh27rMSgiEVezOHktIovNDOOt8pRDEretq7+mh/Vn93UyYw3LFFaShcLRsUPgoPKi0lJirpDx4N3pLqoDA==}
+  '@akisha_jm/search-sdk@0.1.5':
+    resolution: {integrity: sha512-FlXfEYYZtRB03G8vCGeFtpTQ+bVgLsquaY6cr5Od2wGvP92VbgMdsI4D5ct2pLO10ANyu/wVEA4085GtQc+oDg==}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -1837,7 +1837,7 @@ packages:
 
 snapshots:
 
-  '@akisha_jm/search-sdk@0.1.0': {}
+  '@akisha_jm/search-sdk@0.1.5': {}
 
   '@babel/code-frame@7.27.1':
     dependencies:
