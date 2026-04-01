@@ -1,14 +1,15 @@
 type RequestOptions = {
   method?: string;
   headers?: Record<string, string>;
-  body?: any;
+  body?: { [key: string]: unknown };
 };
 
 export async function request(url: string, options: RequestOptions = {}) {
-  const { headers = {}, ...rest } = options;
+  const { headers = {}, body, ...rest } = options;
 
   const res = await fetch(url, {
     ...rest,
+    body: body ? JSON.stringify(body) : undefined,
     headers: {
       'Content-Type': 'application/json',
       ...headers,

@@ -1,6 +1,7 @@
 import { SearchClient } from '@akisha_jm/search-sdk';
-import { request } from './service/http';
 import { useState } from 'react';
+
+import { request } from './service/http';
 
 type Product = {
   id: number;
