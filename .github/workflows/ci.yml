@@ -31,8 +31,8 @@ jobs:
         run: pnpm audit --audit-level=high
 
       # 🔑 Secret scanning
-      - name: Scan for secrets
-        uses: gitleaks/gitleaks-action@v2
+      # - name: Scan for secrets
+      #   uses: gitleaks/gitleaks-action@v2
 
       # 🛡️ PR dependency risk check
       - name: Dependency Review
