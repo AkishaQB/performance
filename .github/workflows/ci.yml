@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -23,7 +24,19 @@ jobs:
           version: 10.28.2
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      # 🔐 Dependency vulnerability scan
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
+
+      # 🔑 Secret scanning
+      - name: Scan for secrets
+        uses: gitleaks/gitleaks-action@v2
+
+      # 🛡️ PR dependency risk check
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v3
 
       - name: Build
         run: pnpm run build
